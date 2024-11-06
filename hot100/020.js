@@ -32,20 +32,24 @@
  * @param {string} s
  * @return {boolean}
  */
-var isValid = function (s) {
-    let map = new Map([[')', '('], [']', '['], ['}', '{']])
-    let list = []
-    for (let i = 0; i < s.length; i++) {
-        let element = s[i]
-        let len = list.length
-        if (list[len - 1] === map.get(element) && list[len - 1]) {
-            list.pop()
+var isValid = function(s) {
+    let  stack = []
+    const keyMap = {
+        ")": "(",
+        "]" :"[",
+        "}": "{"
+    }
+
+    let arr =  s.split('')
+    for (let i = 0; i < arr.length; i++) {
+        const item = arr[i];
+        const last = stack[stack.length - 1]
+        if (last !== keyMap[item] || stack.length === 0) {
+            stack.push(item)
         } else {
-            list.push(element)
+            stack.pop()
         }
     }
-    console.log(list)
-    return list.length === 0
-}
-
-console.log(isValid('()[]{}'));
+    return !stack.length
+};
+console.log(isValid("()"), 'isValid("()")');

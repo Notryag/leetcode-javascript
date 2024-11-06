@@ -28,31 +28,28 @@
  * @return {number}
  */
 var maxProfit = function (prices) {
-  let dp = []
-
-    for (let i = 1; i < prices.length; i++) {
-        const element = prices[i];
-        let pre = prices[i-1]
-        dp[i-1] = element - pre 
-    }
+    let dp = [0]
     let max = 0
-    let long = 0
-    // -6 4 -2 3 -2
-    // -1 1 -2 1
-    for (let i = 0; i < dp.length; i++) {
-        const item = dp[i];
-        if(item + long < 0) {
-            long = 0
-            continue
-        }
-        if(item + long >= 0) {
-            long = long + item
-        }
-
-        if(long > max) {
-            max = long
-        }
+    let s = 0
+    for (let i = 1; i < prices.length; i++) {
+        dp[i] = prices[i] - prices[i - 1]
     }
 
+    for (let i = 0; i < dp.length; i++) {
+        const p = dp[i];
+        
+        s = s + p
+        if (s < 0) {
+            s = 0
+        }
+        if (max < s) {
+            max = s
+        }
+    }
     return max
-};
+
+}
+
+
+// 用数组表示状态,用数组表示不同的情况
+// 
